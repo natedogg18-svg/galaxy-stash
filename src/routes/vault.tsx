@@ -13,6 +13,7 @@ import { Label } from "@/components/ui/label";
 import {
   Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter,
 } from "@/components/ui/dialog";
+import { BackupDialog } from "@/components/BackupDialog";
 
 export const Route = createFileRoute("/vault")({
   head: () => ({
@@ -128,9 +129,12 @@ function Vault() {
             <Orbit className="h-6 w-6 text-primary" />
             <span className="font-semibold text-gradient-aurora text-lg">Nebula Vault</span>
           </div>
-          <Button variant="ghost" size="sm" onClick={signOut}>
-            <LogOut className="h-4 w-4 mr-2" /> Sign out
-          </Button>
+          <div className="flex items-center gap-2">
+            <BackupDialog entries={entries} onImported={load} />
+            <Button variant="ghost" size="sm" onClick={signOut}>
+              <LogOut className="h-4 w-4 mr-2" /> Sign out
+            </Button>
+          </div>
         </header>
 
         <section className="mx-auto max-w-5xl">
