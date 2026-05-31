@@ -54,9 +54,9 @@ export async function encryptBackup(
     JSON.stringify({ exportedAt: new Date().toISOString(), entries })
   );
   const ciphertext = await crypto.subtle.encrypt(
-    { name: "AES-GCM", iv },
+    { name: "AES-GCM", iv: iv as BufferSource },
     key,
-    plaintext
+    plaintext as BufferSource
   );
   return JSON.stringify(
     {
@@ -97,7 +97,7 @@ export async function decryptBackup(
   const key = await deriveKey(passphrase, salt);
   let plain: ArrayBuffer;
   try {
-    plain = await crypto.subtle.decrypt({ name: "AES-GCM", iv }, key, ciphertext);
+    plain = await crypto.subtle.decrypt({ name: "AES-GCM", iv: iv as BufferSource }, key, ciphertext as BufferSource);
   } catch {
     throw new Error("Wrong passphrase or corrupted file");
   }
